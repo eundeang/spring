@@ -17,13 +17,21 @@ public class AppConfig {
      *  - 구체적인 MemoryMemberRepository를 생성자를 통해 넣어준다. (생성자 주입)
      */
     public MemberService memberService() {
-        return new MemberServiceImpl(new MemoryMemberRepository());
+        return new MemberServiceImpl(memberRepository());
     }
+
+    private static MemoryMemberRepository memberRepository() {
+        return new MemoryMemberRepository();
+    }
+
     /**
      * OrderServiceImpld은 사용하는 필드가 두개
      */
     public OrderService orderService() {
-        return new OrderServiceImpl(new MemoryMemberRepository(),new FIxDiscountPolicy());
+        return new OrderServiceImpl(memberRepository(), discountPolicy());
+    }
 
+    private static FIxDiscountPolicy discountPolicy() {
+        return new FIxDiscountPolicy();
     }
 }
