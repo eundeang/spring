@@ -8,7 +8,10 @@ import member.MemberServiceImpl;
 import member.MemoryMemberRepository;
 import order.OrderService;
 import order.OrderServiceImpl;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
 public class AppConfig {
     /**
      *  private final MemberService memberService = new MemberServiceImpl(); 로 직접 지정해줬는데
@@ -18,22 +21,26 @@ public class AppConfig {
      *  다음과 같이 수정해보고 자 한다. (객체를 생성하고 연관관계를 맺어주는 별도의 조립과정, 생성자가 필요하다)
      *  - 구체적인 MemoryMemberRepository를 생성자를 통해 넣어준다. (생성자 주입)
      */
+    @Bean
     public MemberService memberService() {
         return new MemberServiceImpl(memberRepository());
     }
 
-    private static MemoryMemberRepository memberRepository() {
+    @Bean
+    public static MemoryMemberRepository memberRepository() {
         return new MemoryMemberRepository();
     }
 
     /**
      * OrderServiceImpld은 사용하는 필드가 두개
      */
+    @Bean
     public OrderService orderService() {
         return new OrderServiceImpl(memberRepository(), discountPolicy());
     }
 
-    private DiscountPolicy discountPolicy() {
+    @Bean
+    public DiscountPolicy discountPolicy() {
         return new RateDiscoutPolicy();
     }
 }
