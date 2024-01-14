@@ -1,6 +1,8 @@
 package org.example.springboot_begin;
 
+import discount.DiscountPolicy;
 import discount.FIxDiscountPolicy;
+import discount.RateDiscoutPolicy;
 import member.MemberService;
 import member.MemberServiceImpl;
 import member.MemoryMemberRepository;
@@ -31,7 +33,7 @@ public class AppConfig {
         return new OrderServiceImpl(memberRepository(), discountPolicy());
     }
 
-    private static FIxDiscountPolicy discountPolicy() {
-        return new FIxDiscountPolicy();
+    private DiscountPolicy discountPolicy() {
+        return new RateDiscoutPolicy();
     }
 }
